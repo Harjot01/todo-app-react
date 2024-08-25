@@ -1,6 +1,8 @@
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, complex } from "framer-motion";
 import { motion } from "framer-motion";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addTodo, editTodo } from "../redux/todoSlice";
 
 const dropIn = {
   hidden: {
@@ -22,8 +24,40 @@ const dropIn = {
     opacity: 0,
   },
 };
-const TodoModal = ({ modalOpen, setModalOpen }) => {
+const TodoModal = ({
+  modalOpen,
+  setModalOpen,
+  editingMode,
+  setEditingMode,
+  todo,
+}) => {
   const [title, setTitle] = useState("");
+  const [editTitle, setEditTitle] = useState(todo?.text);
+  const dispatch = useDispatch();
+
+  const handleAddTodo = (e) => {
+    e.preventDefault();
+    if (title.trim() === "") {
+      alert("Title cannot be empty!");
+      return;
+    }
+    const newTodo = { id: Date.now(), text: title, completed: false };
+    dispatch(addTodo(newTodo));
+    setTitle("");
+    setModalOpen(false);
+  };
+
+  const handleEditTodo = (e) => {
+    e.preventDefault();
+    if (editTitle.trim() === "") {
+      alert("Title cannot be empty!");
+      return;
+    }
+    dispatch(editTodo({ id: todo.id, text: editTitle }));
+    setModalOpen(false);
+    setEditingMode(false);
+  };
+
   return (
     <AnimatePresence>
       {modalOpen && (
@@ -40,39 +74,78 @@ const TodoModal = ({ modalOpen, setModalOpen }) => {
             animate="visible"
             exit="exit"
           >
-            <form action="" className="flex flex-col gap-4">
-              <h1 className="text-[#646681] font-bold text-2xl">Add TODO</h1>
-
-              <label
-                htmlFor="title"
-                className="flex text-[#646681] flex-col gap-2"
-              >
-                Title
-                <input
-                  type="text"
-                  id="title"
-                  value={title}
-                  name="text"
-                  className="h-10"
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-              </label>
+            <form className="flex flex-col gap-4">
+              <h1 className="text-[#646681] font-bold text-2xl">
+                {editingMode === true ? "Edit Todo" : "Add TODO"}
+              </h1>
+              {editingMode ? (
+                <label
+                  htmlFor="title"
+                  className="flex text-[#646681] flex-col gap-2"
+                >
+                  Edit Title
+                  <input
+                    type="text"
+                    id="editTitle"
+                    value={editTitle}
+                    name="editText"
+                    className="h-10 p-2"
+                    onChange={(e) => setEditTitle(e.target.value)}
+                  />
+                </label>
+              ) : (
+                <label
+                  htmlFor="title"
+                  className="flex text-[#646681] flex-col gap-2"
+                >
+                  Title
+                  <input
+                    type="text"
+                    id="title"
+                    value={title}
+                    name="text"
+                    className="h-10 p-2"
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                </label>
+              )}
               <label
                 htmlFor="type"
                 className="flex text-[#646681] flex-col gap-2"
               >
                 Status
                 <select id="type" className="h-10">
-                  <option value="incomplete">Incomplete</option>
-                  <option value="complete">Completed</option>
+                  <option
+                    value="incomplete"
+                  >
+                    Incomplete
+                  </option>
+                  <option
+                    value="complete"
+                  >
+                    Completed
+                  </option>
                 </select>
               </label>
               <div className="flex gap-4 mt-6">
-                <button className="bg-[#646ff0] text-white px-6 text-lg py-2 font-medium rounded-lg">
-                  Add Task
-                </button>
+                {editingMode ? (
+                  <button
+                    onClick={handleEditTodo}
+                    className="bg-[#646ff0] text-white px-6 text-lg py-2 font-medium rounded-lg"
+                  >
+                    Edit Task
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleAddTodo}
+                    className="bg-[#646ff0] text-white px-6 text-lg py-2 font-medium rounded-lg"
+                  >
+                    Add Task
+                  </button>
+                )}
                 <button
                   className="bg-[#cccdde] px-6 py-2 text-lg rounded-lg text-[#646681]"
+                  type="button"
                   onClick={() => setModalOpen(false)}
                 >
                   Cancel

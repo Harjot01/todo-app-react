@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import TodoModal from "./TodoModal";
 const AppHeader = () => {
   const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <>
       <div className="flex mt-12 justify-between w-[50vw]">
