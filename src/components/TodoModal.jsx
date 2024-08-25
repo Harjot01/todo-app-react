@@ -57,7 +57,7 @@ const TodoModal = ({
     setModalOpen(false);
     setEditingMode(false);
   };
- 
+
 
   return (
     <AnimatePresence>
@@ -115,17 +115,13 @@ const TodoModal = ({
                 className="flex text-[#646681] flex-col gap-2"
               >
                 Status
-                <select id="type" className="h-10">
-                  <option
-                    value="incomplete"
-                  >
-                    Incomplete
-                  </option>
-                  <option
-                    value="complete"
-                  >
-                    Completed
-                  </option>
+                <select
+                  id="type"
+                  className="h-10"
+                  onChange={handleStatusChange}
+                >
+                  <option value="Incomplete">Incomplete</option>
+                  <option value="Completed">Completed</option>
                 </select>
               </label>
               <div className="flex gap-4 mt-6">
