@@ -118,7 +118,6 @@ const TodoModal = ({
                 <select
                   id="type"
                   className="h-10"
-                  onChange={handleStatusChange}
                 >
                   <option value="Incomplete">Incomplete</option>
                   <option value="Completed">Completed</option>
