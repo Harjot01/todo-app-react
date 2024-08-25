@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import TodoModal from "./TodoModal";
-const AppHeader = () => {
+const AppHeader = ({ setFilter }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
+  const handleFilterChange = (e) => {
+    setFilter(e.target.value);
+  };
   return (
     <>
       <div className="flex mt-12 justify-between w-[50vw]">
@@ -17,9 +20,10 @@ const AppHeader = () => {
           name="options"
           className="bg-[#cccdde] px-4 w-40 rounded-lg text-md"
           id="options"
+          onChange={handleFilterChange}
         >
-          <option value="incomplete">Incomplete</option>
           <option value="all">All</option>
+          <option value="incomplete">Incomplete</option>
           <option value="completed">Completed</option>
         </select>
       </div>

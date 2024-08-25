@@ -2,7 +2,7 @@ import { AnimatePresence, complex } from "framer-motion";
 import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addTodo, editTodo } from "../redux/todoSlice";
+import { addTodo, editTodo, toggleTodo } from "../redux/todoSlice";
 
 const dropIn = {
   hidden: {
@@ -57,6 +57,7 @@ const TodoModal = ({
     setModalOpen(false);
     setEditingMode(false);
   };
+ 
 
   return (
     <AnimatePresence>
