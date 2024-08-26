@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { removeTodo, toggleTodo } from "../redux/todoSlice";
 import { motion } from "framer-motion";
 import TodoModal from "./TodoModal";
+import { MdDelete, MdEdit } from "react-icons/md";
 const TodoItem = ({ todo }) => {
   const dispatch = useDispatch();
 
@@ -24,11 +25,19 @@ const TodoItem = ({ todo }) => {
     dispatch(toggleTodo(todo));
   };
 
+  const child = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+    },
+  };
+
   return (
     <>
-      <div
-    
+      <motion.div
         className="flex flex-row items-center justify-between p-2 bg-white"
+        variants={child}
       >
         <div className="flex gap-4 rounded-lg">
           <input
@@ -51,14 +60,14 @@ const TodoItem = ({ todo }) => {
           </div>
         </div>
         <div className="space-x-4">
-          <button onClick={triggerEditEvent}>
-            <img src="./editIcon.png" width="20px" height="5px" alt="" />
+          <button onClick={triggerEditEvent} className="bg-[#ecedf6] text-xl text-gray-600 p-1 rounded-lg">
+            <MdEdit />
           </button>
-          <button onClick={handleRemoveTodo}>
-            <img src="./dltIcon.png" width="20px" height="5px" alt="" />
+          <button onClick={handleRemoveTodo} className="bg-[#ecedf6] text-xl text-gray-600 p-1 rounded-lg">
+            <MdDelete />
           </button>
         </div>
-      </div>
+      </motion.div>
 
       <TodoModal
         modalOpen={modalOpen}

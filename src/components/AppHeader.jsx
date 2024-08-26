@@ -9,7 +9,7 @@ const AppHeader = ({ setFilter }) => {
   };
   return (
     <>
-      <div className="flex mt-12 justify-between w-[50vw]">
+      <div className="flex mt-12 justify-between md:w-[50rem] sm:w-[40rem] w-[30rem]">
         <button
           className="bg-[#646ff0] text-white px-6 text-lg py-2 font-bold rounded-lg"
           onClick={() => setModalOpen(true)}

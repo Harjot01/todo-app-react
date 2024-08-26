@@ -110,19 +110,6 @@ const TodoModal = ({
                   />
                 </label>
               )}
-              <label
-                htmlFor="type"
-                className="flex text-[#646681] flex-col gap-2"
-              >
-                Status
-                <select
-                  id="type"
-                  className="h-10"
-                >
-                  <option value="Incomplete">Incomplete</option>
-                  <option value="Completed">Completed</option>
-                </select>
-              </label>
               <div className="flex gap-4 mt-6">
                 {editingMode ? (
                   <button

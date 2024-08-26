@@ -10,42 +10,47 @@ const AppContent = ({ filter }) => {
     if (filter === "incomplete") return !todo.completed;
   });
 
+  const container = {
+    hidden: { opacity: 1 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+  const child = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+    },
+  };
+
   return (
-    <div className="flex mt-12 flex-col p-4 gap-y-4  bg-[#ecedf6] w-[50vw]">
-      {filteredTodos.length !== 0 ? (
-        <AnimatePresence>
-          {filteredTodos.map((todo) => (
-            <motion.div
-              key={todo.id}
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.5 }}
-              transition={{
-                duration: 0.5,
-                delay: 0.2,
-                ease: [0, 0.71, 0.2, 1.01],
-              }}
-            >
+    <motion.div
+      className="flex mt-5 flex-col p-4 gap-y-4 bg-[#ecedf6] md:w-[50rem] sm:w-[40rem] w-[30rem] rounded-lg"
+      variants={container}
+      initial="hidden"
+      animate="visible"
+    >
+      <AnimatePresence>
+        {filteredTodos.length !== 0 ? (
+          filteredTodos.map((todo) => (
+    
               <TodoItem todo={todo} />
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      ) : (
-        <motion.div
-          className="text-center text-gray-700 text-2xl font-bold"
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.5 }}
-          transition={{
-            duration: 0.5,
-            delay: 0.2,
-            ease: [0, 0.71, 0.2, 1.01],
-          }}
-        >
-          Create a Todo!
-        </motion.div>
-      )}
-    </div>
+          ))
+        ) : (
+          <motion.div
+            className="text-center text-gray-700 text-2xl font-bold"
+            variants={child}
+          >
+            Create a Todo!
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 };
 
