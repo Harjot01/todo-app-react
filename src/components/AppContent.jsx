@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import TodoItem from "./TodoItem";
-
+import { AnimatePresence, motion } from "framer-motion";
 const AppContent = ({ filter }) => {
   const todos = useSelector((state) => state.todos.todos);
 
@@ -13,11 +13,37 @@ const AppContent = ({ filter }) => {
   return (
     <div className="flex mt-12 flex-col p-4 gap-y-4  bg-[#ecedf6] w-[50vw]">
       {filteredTodos.length !== 0 ? (
-        filteredTodos.map((todo) => <TodoItem key={todo.id} todo={todo} />)
+        <AnimatePresence>
+          {filteredTodos.map((todo) => (
+            <motion.div
+              key={todo.id}
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.5 }}
+              transition={{
+                duration: 0.5,
+                delay: 0.2,
+                ease: [0, 0.71, 0.2, 1.01],
+              }}
+            >
+              <TodoItem todo={todo} />
+            </motion.div>
+          ))}
+        </AnimatePresence>
       ) : (
-        <div className="text-center text-gray-700 text-2xl font-bold">
+        <motion.div
+          className="text-center text-gray-700 text-2xl font-bold"
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.5 }}
+          transition={{
+            duration: 0.5,
+            delay: 0.2,
+            ease: [0, 0.71, 0.2, 1.01],
+          }}
+        >
           Create a Todo!
-        </div>
+        </motion.div>
       )}
     </div>
   );

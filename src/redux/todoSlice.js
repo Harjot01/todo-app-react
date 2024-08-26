@@ -2,11 +2,23 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 
-// Initial state
-const initialState = {
-  todos: [],
+const loadTodosFromLocalStorage = () => {
+  try {
+    const serializedTodos = localStorage.getItem("todos");
+    if (serializedTodos === null) {
+      return [];
+    }
+    return JSON.parse(serializedTodos);
+  } catch (e) {
+    console.warn("Error loading todos from local storage", e);
+    return [];
+  }
 };
 
+// Initial state
+const initialState = {
+  todos: loadTodosFromLocalStorage(),
+};
 // Create a slice of the state
 const todoSlice = createSlice({
   name: "todos",
