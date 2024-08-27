@@ -30,7 +30,7 @@ const AppContent = ({ filter }) => {
 
   return (
     <motion.div
-      className="flex mt-5 flex-col p-4 gap-y-4 bg-[#ecedf6] md:w-[50rem] sm:w-[40rem] w-[30rem] rounded-lg"
+      className="flex mt-5 flex-col p-4 gap-y-4 bg-[#ecedf6] w-[90%] sm:w-[80%] md:w-[60%] lg:w-[50%] rounded-lg"
       variants={container}
       initial="hidden"
       animate="visible"
